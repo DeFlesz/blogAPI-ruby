@@ -1,0 +1,22 @@
+<div href="<%= article_path(article) %>" class="list-group-item d-flex justify-content-between align-items-center" style="width: 100%">
+    <div class="ms-2 me-auto align-self-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <div class="mb-2">
+        @<%= article.user.displayname %> -
+        <span class="fw-bold">
+        <%= article.title %>
+        </span>
+        </div>
+            <%= link_to "Destroy Article", [article],
+                data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                }, class: "btn btn-danger btn-sm"
+            %>
+            <%= link_to "Edit Article", edit_article_path(article), class: "btn btn-primary ms-2 btn-sm" %>
+            <%= link_to "Comments", admin_user_article_comments_path(article.user.id, article), class: "btn btn-warning ms-2 btn-sm" %>
+    </div>
+    <!--
+        <a href="<%= article_path(article) %>" class="btn btn-primary">&gt</a> <-- it's equal to link to below
+    <%= link_to ">", article, class: 'btn btn-primary align-self-end m-1' %>
+    -->
+</div>

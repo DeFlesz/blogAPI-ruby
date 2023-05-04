@@ -1,0 +1,15 @@
+<div class="m-2">
+<div class="card" style="margin: auto; max-width: 48rem;">
+<div class="card-body">
+    <%# <h2 class="card-title" >New Article:</h2> %>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><%= link_to "Articles", articles_path %></li>
+            <li class="breadcrumb-item active" aria-current="page">New Article</li>
+        </ol>
+    </nav>
+
+    <%= render "form", article: @article %>
+</div>
+</div>
+</div>

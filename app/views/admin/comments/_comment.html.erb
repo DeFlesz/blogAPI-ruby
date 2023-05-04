@@ -1,0 +1,12 @@
+<div class="card mb-2">
+    <div class="card-body">
+        <h6 class="card-title">@<%= comment.user.displayname %></h6>
+        <div class="card-text mb-2"><%= comment.body %></div>
+        <%= link_to "Destroy Comment", [comment.article, comment],
+            data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure?"
+            }, class: "btn btn-danger btn-sm"
+        %>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<% unless comment.archived? || comment.user == nil %>
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="card-title">@<%= comment.user.displayname %></h5>
+        <div class="card-text mb-2"><%= comment.body %></div>
+        <% if user_signed_in? && (comment.user == current_user || current_user.admin?)%>
+            <%= link_to "Destroy Comment", [comment.article, comment],
+                data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                }, class: "btn btn-danger btn-sm"
+            %>
+        <% end %>
+    </div>
+</div>
+<% end %>

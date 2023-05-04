@@ -1,0 +1,32 @@
+<div class="m-2 ">
+
+<div class="card" style="margin: auto; max-width: 48rem;">
+    <div class="card-body">
+    <%# <h2 class="card-title" >Articles:</h2> %>
+    <div class="d-flex justify-content-between">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><%= link_to "Admin panel", admin_users_path %></li>
+                <% if @user == nil %>
+                <li class="breadcrumb-item active" aria-current="page">Articles</li>
+                <% else %>
+                <li class="breadcrumb-item active" aria-current="page">@<%= @user.displayname %></li>
+                <% end %>
+            </ol>
+        </nav>
+    </div>
+
+
+    <ul class="list-group mb-3">
+        <% if Article.public_count < 1 %>
+            No articles...
+        <% end %>
+        <% @articles.each do |article| %>
+                <%= render "article_list_item", article: article %>
+        <% end %>
+    </ul>
+
+    </div>
+</div>
+<%= link_to "root", root_path, class: "mt-2" %>
+</div>

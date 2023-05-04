@@ -1,0 +1,44 @@
+<div class="m-2 ">
+<!--
+<% if user_signed_in? %>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-link" %>
+<% else %>
+    <%= button_to "Sign in", new_user_session_path, class: "btn btn-link" %>
+    <%# <button class="btn btn-link">Sign in</button><button class="btn btn-link">Sign up</button> %>
+<% end %>
+-->
+
+
+
+<div class="card" style="margin: auto; max-width: 48rem;">
+    <div class="card-body">
+    <%# <h2 class="card-title" >Articles:</h2> %>
+    <div class="d-flex justify-content-between">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Admin panel</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <ul class="list-group mb-3">
+        <% if User.count < 1 %>
+            No users...
+        <% end %>
+        <% @users.each do |user| %>
+            <% unless user == current_user %>
+                <%= render "user_list_item", user: user %>
+            <% end %>
+        <% end %>
+    </ul>
+
+    <%= link_to "All articles", admin_articles_path, class: "btn btn-primary" %>
+    <%= link_to "My articles", admin_user_articles_path(current_user), class: "btn btn-success ms-2" %>
+
+    </div>
+</div>
+
+<%= link_to "root", root_path, class: "mt-2" %>
+
+</div>

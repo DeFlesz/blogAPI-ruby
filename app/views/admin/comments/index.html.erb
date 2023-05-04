@@ -1,0 +1,28 @@
+<div class="m-2 ">
+
+<div class="card" style="margin: auto; max-width: 48rem;">
+    <div class="card-body">
+    <%# <h2 class="card-title" >Articles:</h2> %>
+    <div class="d-flex justify-content-between">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><%= link_to "Admin panel", admin_users_path %></li>
+                <li class="breadcrumb-item"><%= link_to "@#{@user.displayname}", admin_user_articles_path(@user) %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= @article.title %> - comments</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <ul class="list-group mb-3">
+        <% if @comments.count < 1 %>
+            No comments...
+        <% end %>
+        <%= render @comments %>
+
+    </ul>
+
+    </div>
+</div>
+<%= link_to "root", root_path, class: "mt-2" %>
+</div>

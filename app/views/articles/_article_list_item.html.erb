@@ -1,0 +1,15 @@
+<a href="<%= article_path(article) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="width: 100%;; height: 65.75px;">
+    <div class="ms-2 me-auto align-self-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <div>
+        @<%= article.user.displayname %> -
+        <span class="fw-bold">
+        <%= article.title %>
+        </span>
+        </div>
+        <%= article.body %>
+    </div>
+    <!--
+        <a href="<%= article_path(article) %>" class="btn btn-primary">&gt</a> <-- it's equal to link to below
+    <%= link_to ">", article, class: 'btn btn-primary align-self-end m-1' %>
+    -->
+</a>

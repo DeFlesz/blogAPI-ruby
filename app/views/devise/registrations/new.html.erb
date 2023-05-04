@@ -1,0 +1,56 @@
+<div class="m-2">
+<div class="card" style="margin: auto; max-width: 48rem;">
+<div class="card-body">
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <% if alert %>
+  <div class="alert alert-danger" role="alert">
+    <%= alert %>
+  </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :displayname, class: "form-label" %><br />
+    <%= f.text_field :displayname, autofocus: true, autocomplete: "nickname", class: "form-control" %>
+    <% resource.errors.full_messages_for(:displayname).each do |message| %>
+      <div class="invalid-feedback" style="display: block"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :email, class: "form-label" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    <% resource.errors.full_messages_for(:email).each do |message| %>
+      <div class="invalid-feedback" style="display: block"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, class: "form-label" %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <% resource.errors.full_messages_for(:password).each do |message| %>
+      <div class="invalid-feedback" style="display: block"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, class: "form-label" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+      <div class="invalid-feedback" style="display: block"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="actions mb-3">
+    <%= f.submit "Sign up", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+</div>
+</div>
+</div>

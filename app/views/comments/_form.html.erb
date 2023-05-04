@@ -1,0 +1,21 @@
+<%= form_with model: [ @article, @article.comments.build ] do |form| %>
+    <div class="mb-3">
+        <!--
+        <%= form.label :body, class: "form-label" %>
+        -->
+        <%= form.text_area :body, class: "form-control" %>
+
+        <% @article.errors.full_messages_for(:body).each do |message| %>
+            <div class="invalid-feedback" style="display: block"><%= message %></div>
+        <% end %>
+    </div>
+    <%# <!-- %>
+    <div class="mb-3">
+        <%= form.label :status, class: "form-label" %>
+        <%= form.select :status, options_for_select(['public', 'private', 'archived']), {}, {class: "form-select"} %>
+    </div>
+    <%# --> %>
+    <div class="mb-3">
+        <%= form.submit class: "btn btn-primary" %>
+    </div>
+<% end %>

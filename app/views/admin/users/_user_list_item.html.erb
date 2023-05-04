@@ -1,0 +1,26 @@
+<div class="list-group-item d-flex flex-row justify-content-between">
+<div class="d-inline-flex flex-column justify-content-between">
+<div class="ms-2">
+@<%= user.displayname %>
+</div>
+<div class="mt-2">
+    <%= link_to "Destroy User", admin_user_path(user),
+        data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+        }, class: "btn btn-danger ms-2 btn-sm"
+    %>
+    <%= link_to "Articles", admin_user_articles_path(user), class: "btn btn-primary ms-2 btn-sm" %>
+
+</div>
+</div>
+    <%= form_for [:admin, user], class: "row d-inline-flex align-items-end" do |form| %>
+        <div class="col-auto mb-2">
+            <%= form.label :role, class: "form-label" %>
+            <%= form.select :role, ["client", "admin"], {}, {class: "form-select"} %>
+        </div>
+        <div class="col-auto">
+            <%= form.submit class: "btn btn-primary btn-sm" %>
+        </div>
+    <% end %>
+</div>
