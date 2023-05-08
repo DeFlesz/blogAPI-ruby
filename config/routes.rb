@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: "users/sessions" }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   root "articles#index"
 
   namespace :admin do
-    resources :users, only: [:index, :destroy, :update] do
+    resources :users, only: [:index, :destroy, :update, :show] do
       resources :articles, only: [:index] do
         resources :comments, only: [:index]
       end

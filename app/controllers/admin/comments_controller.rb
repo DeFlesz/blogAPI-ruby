@@ -8,6 +8,8 @@ class Admin::CommentsController < ApplicationController
     @user = User.find(params[:user_id])
     @article = @user.articles.find(params[:article_id])
     @comments = @article.comments
+
+    render json: @comments, status: 200
   end
 
   private

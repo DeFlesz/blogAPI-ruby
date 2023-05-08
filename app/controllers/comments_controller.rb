@@ -1,6 +1,15 @@
 class CommentsController < ApplicationController
   include Pundit::Authorization
 
+  def index
+    @article = Article.find(params[:article_id])
+    @comments = @article.comments
+
+    authorize @comments
+
+    render json: @comments, status: 200
+  end
+
   def create
     @article = Article.find(params[:article_id])
     @comment = Comment.new(comment_params)
@@ -9,8 +18,13 @@ class CommentsController < ApplicationController
 
     authorize @comment
 
-    @comment.save
-    redirect_to article_path(@article)
+    if @comment.save
+      render json: { message: "succesfully posted a comment!" }, status: 200
+    else
+      render json: { message: "couldn't post a comment!" }, status: 304
+    end
+
+    # redirect_to article_path(@article)
   end
 
   def destroy

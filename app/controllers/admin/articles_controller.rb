@@ -13,6 +13,7 @@ class Admin::ArticlesController < ApplicationController
     @user = User.find(params[:user_id])
     @articles = @user.articles
 
+    render json: @articles, status: 200
   end
 
   private

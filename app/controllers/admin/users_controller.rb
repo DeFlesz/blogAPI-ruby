@@ -8,6 +8,12 @@ class Admin::UsersController < ApplicationController
     @users = User.all
   end
 
+  def show
+    @user = User.find(params[:id])
+
+    render json: @user, status: 200
+  end
+
   def destroy
     @user = User.find(params[:id])
     authorize [:admin]

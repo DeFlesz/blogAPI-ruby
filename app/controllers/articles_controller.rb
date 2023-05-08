@@ -4,11 +4,15 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
     authorize @articles
+
+    render json: @articles, status: 200
   end
 
   def show
     @article = Article.find(params[:id])
     authorize @article
+
+    render json: @article, status: 200
   end
 
   def new

@@ -7,6 +7,9 @@ gem 'bootstrap', '~> 5.2.3'
 gem 'devise'
 gem "pundit", "~> 2.3"
 
+gem 'rack-cors'
+gem 'tiddle'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 

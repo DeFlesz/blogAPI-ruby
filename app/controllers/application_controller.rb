@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   before_action :configure_permited_parameters, if: :devise_controller?
 
   protected

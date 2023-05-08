@@ -7,9 +7,10 @@ class User < ApplicationRecord
   }
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :token_authenticatable
 
   has_many :articles, dependent: :destroy
+  has_many :authentication_tokens
   validates :displayname, presence: true, length: {minimum: 3, maximum: 32}
   def admin?
     self.role == "admin"
