@@ -10,7 +10,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :token_authenticatable
 
   has_many :articles, dependent: :destroy
-  has_many :authentication_tokens
+  has_many :comments, dependent: :destroy
+  has_many :authentication_tokens, dependent: :destroy
   validates :displayname, presence: true, length: {minimum: 3, maximum: 32}
   def admin?
     self.role == "admin"

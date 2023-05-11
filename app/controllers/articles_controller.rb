@@ -26,9 +26,9 @@ class ArticlesController < ApplicationController
     authorize @article
 
     if @article.save
-      redirect_to @article
+      render json: {message: "article created successfully!"}, status: 200
     else
-      render :new, status: :unprocessable_entity
+      render json: {message: "failed when saving article!"}, status: 304
     end
   end
 
@@ -42,9 +42,9 @@ class ArticlesController < ApplicationController
     authorize @article
 
     if @article.update(article_params)
-      redirect_to @article
+      render json: {message: "article changed successfully!"}, status: 200
     else
-      render :edit, status: :unprocessable_entity
+      render json: {message: "failed when saving article!"}, status: 304
     end
   end
 

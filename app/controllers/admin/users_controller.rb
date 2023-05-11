@@ -6,6 +6,7 @@ class Admin::UsersController < ApplicationController
   def index
     authorize [:admin]
     @users = User.all
+    render json: @users, status: 200
   end
 
   def show
@@ -19,7 +20,7 @@ class Admin::UsersController < ApplicationController
     authorize [:admin]
     @user.destroy
 
-    redirect_to admin_user_path, status: :see_other
+    render json: {message: "user destroyed!"}, status: :see_other
   end
 
   def update
@@ -27,7 +28,7 @@ class Admin::UsersController < ApplicationController
     authorize [:admin]
     @user.update(user_params)
 
-    redirect_to admin_users_path
+    render json: {message: "user successfully updated!"}, status: 200
   end
 
   private
