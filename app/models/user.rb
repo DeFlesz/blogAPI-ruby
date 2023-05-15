@@ -16,4 +16,13 @@ class User < ApplicationRecord
   def admin?
     self.role == "admin"
   end
+
+  def as_json
+    jsn = {
+      id: id,
+      role: role,
+      displayname: displayname
+    }
+    jsn
+  end
 end

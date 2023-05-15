@@ -2,17 +2,20 @@ class ArticlesController < ApplicationController
   include Pundit::Authorization
 
   def index
-    @articles = Article.all
+    page = params[:page] || 1
+    @articles = Article.page(page).per(10)
     authorize @articles
+    articles_count = Article.count
+    pages_count = articles_count % 10 == 0 ? articles_count / 10 : articles_count / 10 + 1
 
-    render json: @articles, status: 200
+    render json: {articles: @articles.as_json, pages_count: pages_count.to_i}, status: 200
   end
 
   def show
     @article = Article.find(params[:id])
     authorize @article
 
-    render json: @article, status: 200
+    render json: @article.as_json, status: 200
   end
 
   def new

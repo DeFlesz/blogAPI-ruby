@@ -4,6 +4,10 @@ class ::AdminPolicy < ApplicationPolicy
     user != nil && (user.admin?)
   end
 
+  def show?
+    user != nil && (user.admin?)
+  end
+
   def destroy?
     user != nil && (user.admin?)
   end

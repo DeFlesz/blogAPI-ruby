@@ -6,4 +6,14 @@ class Comment < ApplicationRecord
 
   # validates :commenter, presence: false
   validates :body, presence: true, length: {minimum: 3}
+  def as_json
+    jsn = {
+      id: id,
+      body: body,
+      status: status,
+      user_id: user_id,
+      username: User.find(user_id).displayname
+    }
+    jsn
+  end
 end

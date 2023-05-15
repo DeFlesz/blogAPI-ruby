@@ -3,11 +3,14 @@ class CommentsController < ApplicationController
 
   def index
     @article = Article.find(params[:article_id])
-    @comments = @article.comments
+
+    page = params[:page] || 1
+    @comments = @article.comments.page(page).per(10)
+    pages_count = @article.comments.count / 10 + 1
 
     authorize @comments
 
-    render json: @comments, status: 200
+    render json: { comments: @comments.as_json, pages_count: pages_count }, status: 200
   end
 
   def create

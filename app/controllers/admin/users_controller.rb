@@ -5,14 +5,21 @@ class Admin::UsersController < ApplicationController
 
   def index
     authorize [:admin]
-    @users = User.all
-    render json: @users, status: 200
+    page = params[:page] || 1
+    @users = User.page(page).per(10)
+
+
+    users_count = User.count
+    pages_count = users_count % 10 == 0 ? users_count / 10 : users_count / 10 + 1
+
+    render json: {users: @users.as_json, pages_count: pages_count}, status: 200
   end
 
   def show
+    authorize [:admin]
     @user = User.find(params[:id])
 
-    render json: @user, status: 200
+    render json: @user.as_json, status: 200
   end
 
   def destroy

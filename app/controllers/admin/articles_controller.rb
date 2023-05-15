@@ -4,16 +4,21 @@ class Admin::ArticlesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def index
-    authorize [:admin]
-
-    @articles = Article.all
+    # @articles = Article.all
+    page = params[:page] || 1
+    @articles = Article.page(page).per(10)
     if (params[:user_id] == nil)
       return
     end
-    @user = User.find(params[:user_id])
-    @articles = @user.articles
 
-    render json: @articles, status: 200
+    @user = User.find(params[:user_id])
+    @articles = @user.articles.page(page).per(10)
+
+    articles_count = @user.articles.count
+    pages_count = articles_count % 10 == 0 ? articles_count / 10 : articles_count / 10 + 1
+    authorize @articles
+
+    render json: {articles: @articles.as_json, pages_count: pages_count.to_i}, status: 200
   end
 
   private

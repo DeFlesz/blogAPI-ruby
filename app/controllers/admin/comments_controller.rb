@@ -7,9 +7,13 @@ class Admin::CommentsController < ApplicationController
     authorize [:admin]
     @user = User.find(params[:user_id])
     @article = @user.articles.find(params[:article_id])
-    @comments = @article.comments
 
-    render json: @comments, status: 200
+    page = params[:page] || 1
+    @comments = @article.comments.page(page).per(5)
+    comments_count = @article.comments.count
+    pages_count = comments_count % 5 == 0 ? comments_count / 5 : comments_count / 5 + 1
+
+    render json: { comments: @comments.as_json, pages_count: pages_count }, status: 200
   end
 
   private

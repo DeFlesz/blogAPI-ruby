@@ -78,3 +78,11 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "sidekiq", "~> 7.1"
+
+gem "redis", "~> 5.0"
+
+gem "pdfkit", "~> 0.8.7"
+
+gem "kaminari", "~> 1.2"
