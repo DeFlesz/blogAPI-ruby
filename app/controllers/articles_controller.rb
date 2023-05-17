@@ -68,8 +68,6 @@ class ArticlesController < ApplicationController
     end
 
     def user_not_authorized(exception)
-      flash[:warning] = "You are not authorized to perform this action."
-
-      redirect_to(request.referrer || root_path)
+      render json: {message: "You are not authorized to perform this action."}, status: 403
     end
 end

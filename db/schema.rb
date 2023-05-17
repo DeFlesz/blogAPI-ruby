@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_08_101535) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_16_085838) do
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -46,15 +46,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_101535) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "jwt_deny_lists", force: :cascade do |t|
+  create_table "pdf_job_items", force: :cascade do |t|
+    t.string "filepath"
+    t.string "status"
+    t.integer "ref"
+    t.string "t"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "jwt_denylist", force: :cascade do |t|
-    t.string "jti", null: false
-    t.datetime "exp", null: false
-    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_101535) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role"
+    t.integer "role", default: 0
     t.string "displayname"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

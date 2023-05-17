@@ -1,0 +1,10 @@
+<div class="p-2">
+<h1>Users list</h1> <br>
+<ul class="list-group mb-3">
+    <% users.each do |user| %>
+        <li class="list-group-item">
+            <b>@<%= user.displayname %></b> - <%= user.email %> <br>
+        </li>
+    <% end %>
+</ul>
+</div>

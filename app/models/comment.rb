@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
   belongs_to :user
 
   # validates :commenter, presence: false
-  validates :body, presence: true, length: {minimum: 3}
+  validates :body, presence: true, length: {minimum: 3, maximum: 1000}
   def as_json
     jsn = {
       id: id,

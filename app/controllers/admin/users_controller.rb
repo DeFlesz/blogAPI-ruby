@@ -23,16 +23,16 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     authorize [:admin]
+    @user = User.find(params[:id])
     @user.destroy
 
     render json: {message: "user destroyed!"}, status: :see_other
   end
 
   def update
-    @user = User.find(params[:id])
     authorize [:admin]
+    @user = User.find(params[:id])
     @user.update(user_params)
 
     render json: {message: "user successfully updated!"}, status: 200
@@ -40,9 +40,7 @@ class Admin::UsersController < ApplicationController
 
   private
     def user_not_authorized(exception)
-      flash[:warning] = "You are not authorized to perform this action."
-
-      redirect_to(request.referrer || root_path)
+      render json: {message: "You are not authorized to perform this action."}, status: 403
     end
 
     def user_params

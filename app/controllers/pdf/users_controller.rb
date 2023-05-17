@@ -1,18 +1,12 @@
-class Pdf::ArticlesController < ApplicationController
+class Pdf::UsersController < ApplicationController
   include Pundit::Authorization
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def index
     authorize [:admin]
-    PdfgenJob.perform_async('articles')
 
-    render json: { message: 'received' }, status: 200
-  end
-
-  def show
-    authorize [:admin]
-    PdfgenJob.perform_async('article', params[:id])
+    PdfgenJob.perform_async('users')
 
     render json: { message: 'received' }, status: 200
   end

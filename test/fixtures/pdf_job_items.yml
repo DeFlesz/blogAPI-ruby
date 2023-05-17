@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  filepath: MyString
+  status: MyString
+  ref: 1
+  t: MyString
+
+two:
+  filepath: MyString
+  status: MyString
+  ref: 1
+  t: MyString

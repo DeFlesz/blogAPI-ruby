@@ -1,43 +1,19 @@
-<div class="m-2">
-<div class="card" style="margin: auto; max-width: 48rem;">
-    <div class="card-body">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><%= link_to "Articles", articles_path %></li>
-                <li class="breadcrumb-item active" aria-current="page">@<%= @article.user.displayname%> - <%= @article.title %></li>
-            </ol>
-        </nav>
-
-        <%# <h5 class="card-title"></h5> %>
-        <p class="card-text"><%= @article.body %></p>
-        <% if user_signed_in? && (@article.user == current_user || current_user.admin?) %>
-        <%= link_to "Edit", edit_article_path, class: "btn btn-primary mt-3" %>
-
-        <%= link_to "Destroy", article_path(@article), data: {
-            turbo_method: :delete,
-            turbo_confirm: "Are you sure?"
-        }, class: "btn btn-danger ms-1 mt-3" %>
-        <% end %>
-        <hr>
-
-        <h4>Leave a comment</h4>
-
-        <% if user_signed_in? %>
-            <%= render "comments/form" %>
-        <% else %>
-            In order to leave a comment you need to <%= link_to "log in...", new_user_session_path%>
-        <% end %>
-
-        <hr>
-
-        <h4>Comments</h4>
-        <!--
-        <%= @article.comments.inspect %>
-        -->
-        <% if Comment.public_count < 1 %>
-            No comments...
-        <% end %>
-        <%= render @article.comments %>
-    </div>
-</div>
+<div class="p-2">
+    <h1>Article summary</h1> <br>
+    <h4>Article - <%= article.title %></h4>
+    <p>
+        <%= article.body %>
+    </p>
+    <hr>
+    <h5>
+        Comments:
+    </h5>
+    <ul class="list-group">
+    <% article.comments.each do |comment| %>
+        <li class="list-group-item">
+            <b> @<%= comment.user.displayname %> </b> - <%= comment.created_at %> <br>
+            <p> <%= comment.body %> </p>
+        </li>
+    <% end %>
+    </ul>
 </div>

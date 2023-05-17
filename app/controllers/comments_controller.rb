@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
 
     page = params[:page] || 1
     @comments = @article.comments.page(page).per(10)
-    pages_count = @article.comments.count / 10 + 1
-
+    comments_count = @article.comments.count
+    pages_count = comments_count % 10 == 0 ? comments_count / 10 : comments_count / 10 + 1
     authorize @comments
 
     render json: { comments: @comments.as_json, pages_count: pages_count }, status: 200
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
   end
 
   private
-    def comment_params
-      params.require(:comment).permit(:body, :status, :user_id)
+    def user_not_authorized(exception)
+      render json: {message: "You are not authorized to perform this action."}, status: 403
     end
 end
