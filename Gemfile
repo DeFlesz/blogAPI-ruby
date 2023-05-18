@@ -88,5 +88,3 @@ gem "pdfkit", "~> 0.8.7"
 gem "kaminari", "~> 1.2"
 
 gem "wicked_pdf", "~> 2.6"
-
-gem "wkhtmltopdf-binary", "~> 0.12.6"

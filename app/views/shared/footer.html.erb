@@ -2,7 +2,22 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <style>
+    section{
+      padding: 0;
+      margin: 0;
+      width: 76%;
+      text-align: center;
+    }
+    div {
+      background: -webkit-linear-gradient(#f9ae19, #c91b04);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 4px
+      /* width: 100%; */
 
+    }
+    </style>
     <script>
       function number_pages() {
         var vars={};
@@ -17,6 +32,6 @@
     </script>
   </head>
   <body onload="number_pages()">
-    Page <span class="page"></span> of <span class="topage"></span>
+    <div style="font-style: italic"><section>Page <span class="page"></span> of <span class="topage"></section></span></div>
   </body>
 </html>

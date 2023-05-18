@@ -53,15 +53,18 @@ class PdfgenJob
     # pdf = WickedPdf.new.pdf_from_string(content.as_json.to_s)
     pdf = WickedPdf.new.pdf_from_string(pdf_html,
       encoding: "utf-8",
-      footer: { center: '[page] of [topage]', left: 'pages:' },
-      header: { center: title }
-      # header: {
-      #   # content: render_to_string()
-      #   spacing: 10, html: { template: 'layouts/_header', locals: {title: title} }
-      # },
-      # footer: {
-      #   spacing: 10, html: { template: 'layouts/_footer' }
-      # }
+      # viewport_size: "1024x768",
+      # footer: { center: '[page] of [topage]', left: 'pages:' },
+      # header: { center: title }
+      header: {
+        content: ActionController::Base.new.render_to_string( template: 'shared/header', layout: nil, locals: {title: title} )
+        # html: { template: 'shared/header.html', layout: nil, locals: {title: title} }
+      },
+      footer: {
+        content: ActionController::Base.new.render_to_string( template: 'shared/footer', layout: nil )
+
+        # html: { template: 'shared/footer.html', layout: nil }
+      }
     )
     save_path = Rails.root.join('pdfs',"#{newJobItem.t == 'article' && Article.exists?(newJobItem.ref) ? content.title : newJobItem.t}-#{newJobItem.created_at.to_s}.pdf")
     File.open(save_path, 'wb') do |file|

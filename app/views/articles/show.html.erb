@@ -10,10 +10,20 @@
     </h5>
     <ul class="list-group">
     <% article.comments.each do |comment| %>
-        <li class="list-group-item">
-            <b> @<%= comment.user.displayname %> </b> - <%= comment.created_at %> <br>
+        <table class="list-group-item">
+        <thead>
+        <tr>
+            <th>
+                <b> @<%= comment.user.displayname %> </b> - <%= comment.created_at %>
+            </th>
+        </tr>
+        </thead>
+        <tr>
+            <td>
             <p> <%= comment.body %> </p>
-        </li>
+            </td>
+        </tr>
+        </table>
     <% end %>
     </ul>
 </div>
