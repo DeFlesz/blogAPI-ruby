@@ -5,8 +5,8 @@ class Pdf::UsersController < ApplicationController
 
   def index
     authorize [:admin]
-
-    PdfgenJob.perform_async('users')
+    newJobItem = PdfJobItem.create(t: 'users', filepath: nil, status: "inprogress", ref: -1 )
+    PdfgenJob.perform_async(newJobItem.id)
 
     render json: { message: 'received' }, status: 200
   end

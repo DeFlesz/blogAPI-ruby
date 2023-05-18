@@ -1,29 +1,69 @@
 class PdfgenJob
   include Sidekiq::Job
 
-  def perform(t, id = -1)
+  def perform(job_id)
     ActionCable.server.broadcast("pdf_gen_channel", { body: "job started"})
-    newJobItem = PdfJobItem.create(t: t, filepath: nil, status: "inprogress", ref: id )
-
-    case t
+    if PdfJobItem.exists?(job_id)
+      newJobItem = PdfJobItem.find(job_id)
+    else
+      return
+    end
+    # liter
+    case newJobItem.t
     when 'article'
-      if Article.exists?(id)
-        content = Article.find(id)
-        pdf_html = ActionController::Base.new.render_to_string(template: 'articles/show', layout: 'pdf', locals: { article: content})
+      if Article.exists?(newJobItem.ref)
+        content = Article.find(newJobItem.ref)
+        title = 'article'
+        pdf_html = ActionController::Base.new.render_to_string(
+          template: 'articles/show',
+          layout: 'pdf',
+          locals: {
+            article: content
+          },
+          # header: { right: '[page] of [topage]' }
+          # header: {
+          #   html: { template: '/layouts/_header.html'}
+          # },
+          # footer: {
+          #   html: { template: '/layouts/_footer.html'}
+          # }
+        )
       else
-        pdf_html = ActionController::Base.new.render_to_string(template: 'articles/not_found', layout: 'pdf', locals: { id: id})
+        title = 'not found'
+        pdf_html = ActionController::Base.new.render_to_string(
+          template: 'articles/not_found',
+          layout: 'pdf',
+          locals: { id: newJobItem.ref }
+        )
       end
     when 'articles'
       content = Article.all
-      pdf_html = ActionController::Base.new.render_to_string(template: 'articles/index', layout: 'pdf', locals: { articles: content})
+      title = 'articles'
+      pdf_html = ActionController::Base.new.render_to_string(
+        template: 'articles/index',
+        layout: 'pdf',
+        locals: { articles: content }
+      )
     else
       content = User.all
-      pdf_html = ActionController::Base.new.render_to_string(template: 'users/index', layout: 'pdf', locals: { users: content})
+      title = 'users'
+      pdf_html = ActionController::Base.new.render_to_string(template: 'users/index', layout: 'pdf', locals: { users: content })
     end
 
     # pdf = WickedPdf.new.pdf_from_string(content.as_json.to_s)
-    pdf = WickedPdf.new.pdf_from_string(pdf_html)
-    save_path = Rails.root.join('pdfs',"#{newJobItem.t == 'article' && Article.exists?(id) ? content.title : newJobItem.t}-#{newJobItem.created_at.to_s}.pdf")
+    pdf = WickedPdf.new.pdf_from_string(pdf_html,
+      encoding: "utf-8",
+      footer: { center: '[page] of [topage]', left: 'pages:' },
+      header: { center: title }
+      # header: {
+      #   # content: render_to_string()
+      #   spacing: 10, html: { template: 'layouts/_header', locals: {title: title} }
+      # },
+      # footer: {
+      #   spacing: 10, html: { template: 'layouts/_footer' }
+      # }
+    )
+    save_path = Rails.root.join('pdfs',"#{newJobItem.t == 'article' && Article.exists?(newJobItem.ref) ? content.title : newJobItem.t}-#{newJobItem.created_at.to_s}.pdf")
     File.open(save_path, 'wb') do |file|
       file << pdf
     end

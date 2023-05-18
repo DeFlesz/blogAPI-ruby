@@ -5,14 +5,16 @@ class Pdf::ArticlesController < ApplicationController
 
   def index
     authorize [:admin]
-    PdfgenJob.perform_async('articles')
+    newJobItem = PdfJobItem.create(t: 'articles', filepath: nil, status: "inprogress", ref: -1 )
+    PdfgenJob.perform_async(newJobItem.id)
 
     render json: { message: 'received' }, status: 200
   end
 
   def show
     authorize [:admin]
-    PdfgenJob.perform_async('article', params[:id])
+    newJobItem = PdfJobItem.create(t: 'article', filepath: nil, status: "inprogress", ref: params[:id] )
+    PdfgenJob.perform_async(newJobItem.id)
 
     render json: { message: 'received' }, status: 200
   end
